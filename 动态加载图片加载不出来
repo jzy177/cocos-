@@ -1,0 +1,20 @@
+import {
+  _decorator,
+  Component,
+  Node,
+  resources,
+  Sprite,
+  SpriteFrame,
+} from "cc";
+const { ccclass, property } = _decorator;
+
+@ccclass("Game")
+export class Game extends Component {
+  start() {
+    const url = "assets/resources/mycard/spriteFrame";
+    resources.load(url, SpriteFrame, (err, spriteFrame) => {
+      this.node.getComponent(Sprite).spriteFrame = spriteFrame;
+    });
+  }
+
+  这是原来的代码，运行的时候图片加载不出来，最终确定的原因是url路径问题，因为resources.load()默认已经找到了resources文件夹，这个url的相对路径应该直接在resources下边写，也就是const url = "mycard/spriteFrame";这样更改之后即可正常动态加载图片
